@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Code Quiz</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="bg-secondary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
+      <div class="container navbar-container ml-auto">
+        <div class="row w-100">
+          <div class="col-sm-12 col-md-6">
+            <button id="home" class="btn btn-info d-flex flex-row mb-2">
+              Home
+            </button>
+            <button type="button" id="highscore-button" class="btn btn-success">
+              High Scores
+            </button>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <form>
+              <div class="form-selection row">
+                <label
+                  for="time-remaining"
+                  class="col-sm-12 col-md-8 col-form-label font-weight-bold text-danger"
+                  >Time Left
+                </label>
+                <div class="col-sm-5">
+                  <input
+                    type="number"
+                    readonly
+                    class="form-control font-weight-bold text-danger"
+                    id="time-remaining"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      id="main-container"
+      class="container-fluid bg-dark text-white border border-success"
+    >
+      <div class="row mb-3">
+        <div class="col-sm-12 text-center bg-success text-white">
+          <h1>Code Quiz</h1>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 text-center">
+          <p>
+            You have 60 seconds to answer 5 questions. The faster you finish,
+            the higher your score. Every wrong answer is a 15 second penalty
+            though!
+          </p>
+          <br />
+          <p class="text-center">
+            Click <span class="bg-success text-white">"Start Quiz"</span> to
+            begin.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center mb-1">
+          <button
+            id="start"
+            type="button"
+            class="btn btn-success btn-lg text-white"
+          >
+            Start Quiz
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-container" class="container d-none"></div>
+    <div id="final-container" class="container d-none">
+      <div class="row">
+        <div class="col-12 text-center">
+          <form>
+            <div class="form-selection row">
+              <label
+                for="final-score"
+                class="col-sm-8 col-form-label bg-success text-white"
+                >Your Score</label
+              >
+              <div class="col-sm-12 col-md-8">
+                <input
+                  type="number"
+                  readonly
+                  class="form-control"
+                  id="final-score"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+          </form>
+          <form>
+            <div class="form-selection bg-success text-white">
+              <label for="initials-entry">Your Initials</label>
+              <input
+                type="text"
+                class="form-control"
+                id="initials-entry"
+                placeholder="Enter your initials"
+              />
+            </div>
+            <button id="submit-initials" type="button" class="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="highscore-container" class="container d-none">
+      <div class="row">
+        <div class="col-2"></div>
+        <div
+          id="highscore-table"
+          class="col-8 bg-dark text-white border border-success"
+        >
+          <div class="row bg-success text-white">
+            <div class="col-sm-12 text-center">
+              <h1>High Scores</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12"></div>
+      </div>
+    </div>
+
+    <script src="./quiz.js"></script>
+    <script src="./highscores.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
