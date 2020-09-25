@@ -40,7 +40,7 @@ var questions = [
 var startEl = document.querySelector("#start");
 var timeRemainingEl = document.querySelector("#time-remaining");
 var finalScoreEl = document.querySelector("#final-score");
-// var numQuestions = questions.length;
+var numQuestions = questions.length;
 var mainContainerEl = document.querySelector("#main-container");
 var quizContainerEl = document.querySelector("#quiz-container");
 var finalContainerEl = document.querySelector("#final-container");
@@ -49,3 +49,57 @@ var highscoreButtonEl = document.querySelector("#highscore-button");
 var highscoreContainerEl = document.querySelector("#highscore-container");
 var home = document.querySelector("#home");
 var highScores = [];
+
+
+function startQuiz() {
+  mainContainerEl.setAttribute("class", "container d-none");
+  var rowEl = null;
+  var colEl = null;
+  var headerEl = null;
+  var buttonEl = null;
+  quizContainerEl.setAttribute("class", "container");
+  var currentQuestion = 1;
+  var score = 0;
+  timeRemaining = 150;
+  timeRemainingEl.setAttribute("value", timeRemaining);
+  var myInterval = setInterval(function () {
+    timeRemaining--;
+    if (timeRemaining < 1) {
+      clearInterval(myInterval);
+      quizContainerEl.setAttribute("class", "container d-none");
+      finalContainerEl.setAttribute("class", "container");
+      return;
+    }
+
+
+    function generateQuestion(questionNum) {
+      quizContainerEl.innerHTML = "";
+      rowEl = document.createElement("div");
+      rowEl.setAttribute("class", "row text-white");
+      quizContainerEl.append(rowEl);
+  
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-0 col-sm-2 bg-success");
+      rowEl.append(colEl);
+  
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-12 col-sm-8 bg-dark");
+      rowEl.append(colEl);
+  
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-0 col-sm-2 bg-success");
+      rowEl.append(colEl);
+  
+      colEl = rowEl.children[1];
+      rowEl = document.createElement("div");
+      rowEl.setAttribute("class", "row mb-3");
+      colEl.append(rowEl);
+  
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-12 mb-2");
+      rowEl.append(colEl);
+  
+      headerEl = document.createElement("h2");
+      headerEl.innerHTML = questions[questionNum - 1].title;
+      colEl.append(headerEl);
+    }
