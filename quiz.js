@@ -50,7 +50,6 @@ var highscoreContainerEl = document.querySelector("#highscore-container");
 var home = document.querySelector("#home");
 var highScores = [];
 
-
 function startQuiz() {
   mainContainerEl.setAttribute("class", "container d-none");
   var rowEl = null;
@@ -71,35 +70,107 @@ function startQuiz() {
       return;
     }
 
+    timeRemainingEl.setAttribute("value", timeRemaining);
+  }, 1000);
+  var clickTimeout = false;
 
-    function generateQuestion(questionNum) {
-      quizContainerEl.innerHTML = "";
-      rowEl = document.createElement("div");
-      rowEl.setAttribute("class", "row text-white");
-      quizContainerEl.append(rowEl);
-  
-      colEl = document.createElement("div");
-      colEl.setAttribute("class", "col-0 col-sm-2 bg-success");
-      rowEl.append(colEl);
-  
-      colEl = document.createElement("div");
-      colEl.setAttribute("class", "col-12 col-sm-8 bg-dark");
-      rowEl.append(colEl);
-  
-      colEl = document.createElement("div");
-      colEl.setAttribute("class", "col-0 col-sm-2 bg-success");
-      rowEl.append(colEl);
-  
-      colEl = rowEl.children[1];
-      rowEl = document.createElement("div");
-      rowEl.setAttribute("class", "row mb-3");
+  function generateQuestion(questionNum) {
+    quizContainerEl.innerHTML = "";
+    rowEl = document.createElement("div");
+    rowEl.setAttribute("class", "row text-white");
+    quizContainerEl.append(rowEl);
+
+    colEl = document.createElement("div");
+    colEl.setAttribute("class", "col-0 col-sm-2 bg-success");
+    rowEl.append(colEl);
+
+    colEl = document.createElement("div");
+    colEl.setAttribute("class", "col-12 col-sm-8 bg-dark");
+    rowEl.append(colEl);
+
+    colEl = document.createElement("div");
+    colEl.setAttribute("class", "col-0 col-sm-2 bg-success");
+    rowEl.append(colEl);
+
+    colEl = rowEl.children[1];
+    rowEl = document.createElement("div");
+    rowEl.setAttribute("class", "row mb-3");
+    colEl.append(rowEl);
+
+    colEl = document.createElement("div");
+    colEl.setAttribute("class", "col-12 mb-2");
+    rowEl.append(colEl);
+
+    headerEl = document.createElement("h2");
+    headerEl.innerHTML = questions[questionNum - 1].title;
+    colEl.append(headerEl);
+
+    colEl = quizContainerEl.children[0].children[1];
+    for (var i = 0; i < 4; i++) {
+      var rowEl = document.createElement("div");
+      rowEl.setAttribute("class", "row mb-1");
       colEl.append(rowEl);
-  
-      colEl = document.createElement("div");
-      colEl.setAttribute("class", "col-12 mb-2");
-      rowEl.append(colEl);
-  
-      headerEl = document.createElement("h2");
-      headerEl.innerHTML = questions[questionNum - 1].title;
-      colEl.append(headerEl);
+
+      var colEl2 = document.createElement("div");
+      colEl2.setAttribute("class", "col-12");
+      rowEl.append(colEl2);
+
+      buttonEl = document.createElement("button");
+      buttonEl.setAttribute("class", "btn btn-success");
+      buttonEl.setAttribute("type", "button");
+      buttonEl.innerHTML = questions[currentQuestion - 1].choices[i];
+      colEl2.append(buttonEl);
+      buttonEl.addEventListener("click", function () {
+        if (clickTimeout) {
+          return;
+        }
+        clickTimeout = true;
+        clearInterval(myInterval);
+        var rowEl = document.createElement("div");
+        rowEl.setAttribute("class", "row border-top");
+        colEl.append(rowEl);
+
+        colEl = document.createElement("div");
+        colEl.setAttribute("class", "col-12");
+        rowEl.append(colEl);
+
+        var parEl = document.createElement("p");
+        colEl.append(parEl);
+        if (this.innerHTML === questions[currentQuestion - 1].answer) {
+          parEl.innerHTML = "Correct!";
+        } else {
+          parEl.innerHTML = "Incorrect!";
+          timeRemaining = timeRemaining - 15;
+          if (timeRemaining < 0) {
+            timeRemaining = 0;
+          }
+          timeRemainingEl.setAttribute("value", timeRemaining);
+        }
+        currentQuestion++;
+        if (currentQuestion > questions.length) {
+          score = timeRemaining * 5;
+        }
+        setTimeout(function () {
+          if (currentQuestion > questions.length) {
+            quizContainerEl.setAttribute("class", "container d-none");
+            finalContainerEl.setAttribute("class", "container");
+            finalScoreEl.setAttribute("value", score);
+          } else {
+            generateQuestion(currentQuestion);
+            clickTimeout = false;
+            myInterval = setInterval(function () {
+              if (timeRemaining < 1) {
+                clearInterval(myInterval);
+                quizContainerEl.setAttribute("class", "container d-none");
+                finalContainerEl.setAttribute("class", "container");
+                return;
+              }
+              timeRemaining = timeRemaining - 1;
+              timeRemainingEl.setAttribute("value", timeRemaining);
+            }, 1000);
+          }
+        }, 1000);
+      });
     }
+  }
+}
